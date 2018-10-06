@@ -5,15 +5,19 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./config/db');
-
-
+var api = require('./routes/oficio');
 
 const app = express();
 
 // Conexion a la base de datos
 mongoose.connect(config.database, { useNewUrlParser: true }).then(
-    ()=> {console.log('Conectado a la base de datos ' + config.database)},
-    err => {console.log('Error de conexion ' + err)}
+    () => {
+        console.log('Conectado a la base de datos ' + config.database)
+        app.listen(port, () => {
+            console.log("Servidor escuchando en puerto " + port);
+        });
+    },
+    err => { console.log('Error de conexion ' + err) }
 );
 
 
@@ -29,8 +33,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Body Parser Middleware permite la renderización de las vistas
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
 
 //Headers necesarios para que el servidor node de accso a las peticiones no importando que cabeceras
 /*app.use(function(req, res, next) {
@@ -39,11 +43,4 @@ app.use(bodyParser.json());
     next();
   });*/
 
-// Index Route
-app.get('/', (req, res) => {
-    res.send('Endpoint invalido');
-});
-
-app.listen(port, () => {
-    console.log("Servidor escuchando en puerto " + port);
-});
+app.use('/api', api);
