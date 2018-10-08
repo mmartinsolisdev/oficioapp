@@ -10,8 +10,15 @@ const oficioSchema = mongoose.Schema({
     telefono: String,
     correo: String,
     ubicacion: String,
-    status: boolean,
-    IDdeUsuario: String
+    status: Boolean
 });
 
 module.exports = mongoose.model('Oficio', oficioSchema);
+
+module.exports.getOficio = function(id, callback){
+    Inscripcion.findById(id, callback);
+}
+
+module.exports.saveOficio = function (oficio, callback){
+    oficio.save(callback);
+}
