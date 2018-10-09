@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const oficioSchema = mongoose.Schema({
+const oficioSchema = new mongoose.Schema({
     titulo: String,
     descripcion: String,
     logo: String,
@@ -13,12 +13,12 @@ const oficioSchema = mongoose.Schema({
     status: Boolean
 });
 
-module.exports = mongoose.model('Oficio', oficioSchema);
+const Oficio = module.exports = mongoose.model('Oficio', oficioSchema);
 
-module.exports.getOficio = function(id, callback){
-    Inscripcion.findById(id, callback);
+module.exports.getOficios = function(callback){
+    Oficio.find({}, callback);
 }
 
-module.exports.saveOficio = function (oficio, callback){
-    oficio.save(callback);
+module.exports.saveOficio = function (newOficio, callback){
+    newOficio.save(callback);
 }

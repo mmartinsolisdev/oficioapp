@@ -1,11 +1,17 @@
 'use strict';
 const Oficio = require('../models/oficio');
 
-//Metodo que trae un oficio por ID
-function getOficio(req, res) {
-    var oficioID = req.params.id;
-    res.status(200).send({ data: oficioID });
+//Metodo que trae todos los oficios
+function getOficios(req, res) {
+    Oficio.getOficios((err, oficios) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al obtener los Oficios' });
+        } else {
+            res.status(200).send({ oficios });
+        }
+    });
 }
+
 //Metodo que guarda un oficio
 function saveOficio(req, res) {
     let params = req.body;
@@ -21,17 +27,16 @@ function saveOficio(req, res) {
     });
 
     Oficio.saveOficio(oficio, (err, newOficioSaved) => {
-        console.log(newOficioSaved);
         if (err) {
             res.status(500).send({ message: 'Error al guardar el Oficio' });
         } else {
-            res.status(200).send({ message: 'Oficio guardado correctamante' });
+            res.status(200).send({ message: 'Oficio guardado correctamante', newOficioSaved });
         }
     });
 }
 
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
-    getOficio,
+    getOficios,
     saveOficio
 }
