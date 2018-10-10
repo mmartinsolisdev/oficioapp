@@ -16,9 +16,17 @@ const oficioSchema = new mongoose.Schema({
 const Oficio = module.exports = mongoose.model('Oficio', oficioSchema);
 
 module.exports.getOficios = function(callback){
-    Oficio.find({}, callback);
+    Oficio.find({status: true}).sort('-_id').exec(callback);
+}
+
+module.exports.getOficio = function(id, callback){
+    Oficio.findById(id,).exec(callback);
 }
 
 module.exports.saveOficio = function (newOficio, callback){
     newOficio.save(callback);
+}
+
+module.exports.updateOficio = function (newOficio, callback){
+    Oficio.save(callback);
 }

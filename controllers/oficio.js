@@ -12,6 +12,18 @@ function getOficios(req, res) {
     });
 }
 
+//Metodo que trae un oficio por ID
+function getOficio(req, res) {
+    let oficioID = req.params.id;
+    //console.log(oficioID);
+    Oficio.getOficio(oficioID, (err, oficio) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al obtener el oficio', err });
+        } else {
+            res.status(200).send({ oficio });
+        }
+    });
+}
 //Metodo que guarda un oficio
 function saveOficio(req, res) {
     let params = req.body;
@@ -38,5 +50,6 @@ function saveOficio(req, res) {
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
     getOficios,
+    getOficio,
     saveOficio
 }

@@ -5,8 +5,8 @@ const router = express.Router();
 var oficioController = require('../controllers/oficio');
 
 // Obtener un Oficio
-//router.get('/oficio/:id', oficioController.getOficio);
-router.get('/oficio', oficioController.getOficios);
+router.get('/oficio/:id', oficioController.getOficio);
+router.get('/oficios', oficioController.getOficios);
 router.post('/oficio', oficioController.saveOficio);
 
 // Index Route
