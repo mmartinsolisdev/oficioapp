@@ -20,13 +20,13 @@ module.exports.getOficios = function(callback){
 }
 
 module.exports.getOficio = function(id, callback){
-    Oficio.findById(id,).exec(callback);
+    Oficio.findById(id).exec(callback);
 }
 
 module.exports.saveOficio = function (newOficio, callback){
     newOficio.save(callback);
 }
 
-module.exports.updateOficio = function (newOficio, callback){
-    Oficio.save(callback);
+module.exports.updateOficio = function (id, update, callback){
+    Oficio.findByIdAndUpdate(id, update, callback);
 }

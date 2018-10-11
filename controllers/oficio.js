@@ -47,9 +47,23 @@ function saveOficio(req, res) {
     });
 }
 
+//Metodo que actualiza un oficio por ID
+function updateOficio(req, res) {
+    let oficioID = req.params.id;
+    let update = req.body;
+    Oficio.updateOficio(oficioID, update, (err, oficioUpdated) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al actualizar el oficio', err });
+        } else {
+            res.status(200).send({ oficioUpdated });
+        }
+    });
+}
+
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
     getOficios,
     getOficio,
-    saveOficio
+    saveOficio,
+    updateOficio
 }
