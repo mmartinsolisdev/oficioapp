@@ -9,6 +9,7 @@ router.get('/oficios', oficioController.getOficios);
 router.get('/oficio/:id', oficioController.getOficio);
 router.post('/oficio', oficioController.saveOficio);
 router.put('/oficio/:id', oficioController.updateOficio);
+router.delete('/oficio/:id', oficioController.deleteOficio);
 
 // Index Route
 router.get('/', (req, res) => {

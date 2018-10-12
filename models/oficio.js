@@ -30,3 +30,7 @@ module.exports.saveOficio = function (newOficio, callback){
 module.exports.updateOficio = function (id, update, callback){
     Oficio.findByIdAndUpdate(id, update, callback);
 }
+
+module.exports.deleteOficio = function (id, callback){
+    Oficio.findByIdAndDelete(id, callback);
+}

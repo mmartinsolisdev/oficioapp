@@ -60,10 +60,23 @@ function updateOficio(req, res) {
     });
 }
 
+//Metodo que actualiza un oficio por ID
+function deleteOficio(req, res) {
+    let oficioID = req.params.id;
+    Oficio.deleteOficio(oficioID, (err, oficioDeleted) => {
+        if (err) {
+            res.status(500).send({ message: 'Error al eliminar el oficio', err });
+        } else {
+            res.status(200).send({ message: 'El oficio '+oficioDeleted.titulo+' ha sido eliminado' });
+        }
+    });
+}
+
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
     getOficios,
     getOficio,
     saveOficio,
-    updateOficio
+    updateOficio,
+    deleteOficio
 }
