@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const oficioSchema = new mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({
     titulo: String,
     descripcion: String,
     logo: String,
@@ -13,13 +13,13 @@ const oficioSchema = new mongoose.Schema({
     status: Boolean
 });
 
-const Oficio = module.exports = mongoose.model('Oficio', oficioSchema);
+const Usuario = module.exports = mongoose.model('Usuario', usuarioSchema);
 
 module.exports.getOficios = function(callback){
     Oficio.find({status: true}).sort('-_id').exec(callback);
 }
 
-module.exports.getOficio = function(id, callback){
+module.exports.getEmail= function(email, callback){
     Oficio.findById(id).exec(callback);
 }
 

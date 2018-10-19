@@ -12,15 +12,19 @@ function getOficios(req, res) {
     });
 }
 
-//Metodo que trae un oficio por ID
-function getOficio(req, res) {
-    let oficioID = req.params.id;
+//Metodo que busca un usuario por Email
+function getEmail(req, res) {
+    let usuarioEmail = req.params.email;
     //console.log(oficioID);
-    Oficio.getOficio(oficioID, (err, oficio) => {
+    Oficio.getusuario(usuarioEmail, (err, email) => {
         if (err) {
-            res.status(500).send({ message: 'Error al obtener el oficio', err });
+            res.status(500).send({ message: 'Error al obtener el email', err });
         } else {
-            res.status(200).send({ oficio });
+            if(!email){
+                res.status(400).send({ message: 'Email no encontrado'});
+            } else {
+                res.status(200).send({ message: 'Email ya está en uso', email });
+            }
         }
     });
 }
@@ -75,7 +79,7 @@ function deleteOficio(req, res) {
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
     getOficios,
-    getOficio,
+    getEmail,
     saveOficio,
     updateOficio,
     deleteOficio

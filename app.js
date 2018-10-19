@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./config/db');
-var api = require('./routes/oficio');
+var api = require('./routes/routes');
 
 const app = express();
 
