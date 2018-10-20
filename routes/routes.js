@@ -14,8 +14,8 @@ router.delete('/oficio/:id', oficioController.deleteOficio);
 
 // Rutas usuarios
 router.get('/usuario/:email', usuarioController.getEmail);
-/*router.post('/usuario', oficioController.saveUsuario);
-router.put('/usuario/:id', oficioController.updateUsuario);*/
+router.post('/usuario', usuarioController.saveUsuario);
+//router.put('/usuario/:id', oficioController.updateUsuario);
 
 // Index Route
 router.get('/', (req, res) => {

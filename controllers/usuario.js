@@ -1,58 +1,65 @@
 'use strict';
-const Oficio = require('../models/oficio');
+const Usuario = require('../models/usuario');
 
 //Metodo que trae todos los oficios
-function getOficios(req, res) {
-    Oficio.getOficios((err, oficios) => {
+/*function getOficios(req, res) {
+    Usuario.getUsuarios((err, oficios) => {
         if (err) {
             res.status(500).send({ message: 'Error al obtener los Oficios' });
         } else {
             res.status(200).send({ oficios });
         }
     });
-}
+}*/
 
 //Metodo que busca un usuario por Email
 function getEmail(req, res) {
     let usuarioEmail = req.params.email;
-    //console.log(oficioID);
-    Oficio.getusuario(usuarioEmail, (err, email) => {
+    console.log('params = ' + usuarioEmail);
+    Usuario.getEmail(usuarioEmail, (err, email) => {
+        let emailEncontrado = email[0].email;
         if (err) {
             res.status(500).send({ message: 'Error al obtener el email', err });
         } else {
-            if(!email){
-                res.status(400).send({ message: 'Email no encontrado'});
+            console.log(usuarioEmail);
+            console.log(emailEncontrado);
+            if (email == '' || emailEncontrado != usuarioEmail) {
+                res.status(200).send({ message: 'Email disponible' });
             } else {
                 res.status(200).send({ message: 'Email ya está en uso', email });
             }
         }
+        //console.log(email)
     });
 }
+
 //Metodo que guarda un oficio
-function saveOficio(req, res) {
+function saveUsuario(req, res) {
     let params = req.body;
-    let oficio = new Oficio({
-        titulo: params.titulo,
-        descripcion: params.descripcion,
-        logo: params.logo,
-        servicios: params.servicios,
+    let usuario = new Usuario({
+        nombre: params.nombre,
+        apellidos: params.apellidos,
+        email: params.email,
+        contraseña: params.servicios,
         telefono: params.telefono,
-        correo: params.ubicacion,
-        ubicacion: params.ubicacion,
-        status: params.status
+        estado: params.estado,
+        ciudad: params.ciudad,
+        municipio: params.municipio,
+        calle: params.calle,
+        colonia: params.colonia
     });
 
-    Oficio.saveOficio(oficio, (err, newOficioSaved) => {
+    Usuario.saveUsuario(usuario, (err, newUsuarioSaved) => {
         if (err) {
             res.status(500).send({ message: 'Error al guardar el Oficio' });
         } else {
-            res.status(200).send({ message: 'Oficio guardado correctamante', newOficioSaved });
+            res.status(200).send({ message: 'Usuario guardado correctamante', newUsuarioSaved });
         }
     });
 }
 
 //Metodo que actualiza un oficio por ID
-function updateOficio(req, res) {
+/*function updateOficio(req, res) {
     let oficioID = req.params.id;
     let update = req.body;
     Oficio.updateOficio(oficioID, update, (err, oficioUpdated) => {
@@ -62,10 +69,10 @@ function updateOficio(req, res) {
             res.status(200).send({ oficioUpdated });
         }
     });
-}
+}*/
 
 //Metodo que actualiza un oficio por ID
-function deleteOficio(req, res) {
+/*function deleteOficio(req, res) {
     let oficioID = req.params.id;
     Oficio.deleteOficio(oficioID, (err, oficioDeleted) => {
         if (err) {
@@ -74,13 +81,13 @@ function deleteOficio(req, res) {
             res.status(200).send({ message: 'El oficio '+oficioDeleted.titulo+' ha sido eliminado' });
         }
     });
-}
+}*/
 
 //Permite llamar a los metodos dentro del controlador
 module.exports = {
-    getOficios,
+    //getOficios,
     getEmail,
-    saveOficio,
-    updateOficio,
-    deleteOficio
+    saveUsuario,
+    //updateOficio,
+    //deleteOficio
 }
