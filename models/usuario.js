@@ -22,7 +22,7 @@ module.exports.getUsuarios = function(callback){
 }
 
 module.exports.getEmail = function(email, callback){
-    Usuario.find({email: email},{email:1}, callback);
+    Usuario.find({email: email},{email:1}).lean().exec(callback);
 }
 
 module.exports.saveUsuario = function (newUsuario, callback){

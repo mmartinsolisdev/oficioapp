@@ -15,16 +15,16 @@ const Usuario = require('../models/usuario');
 //Metodo que busca un usuario por Email
 function getEmail(req, res) {
     let usuarioEmail = req.params.email;
-    console.log('params = ' + usuarioEmail);
+   // console.log('params = ' + usuarioEmail);
     Usuario.getEmail(usuarioEmail, (err, email) => {
-        let emailEncontrado = email[0].email;
+        let emailEncontrado = email[0];
+        //console.log(emailEncontrado);
+        //console.log(Object.keys(email).length);
         if (err) {
             res.status(500).send({ message: 'Error al obtener el email', err });
         } else {
-            console.log(usuarioEmail);
-            console.log(emailEncontrado);
-            if (email == '' || emailEncontrado != usuarioEmail) {
-                res.status(200).send({ message: 'Email disponible' });
+            if (Object.keys(email).length == 0 || emailEncontrado.email != usuarioEmail) {
+                res.status(400).send({ message: 'Email disponible' });
             } else {
                 res.status(200).send({ message: 'Email ya está en uso', email });
             }
