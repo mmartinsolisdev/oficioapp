@@ -13,8 +13,8 @@ const Usuario = require('../models/usuario');
 }*/
 
 //Metodo que busca un usuario por Email
-function getEmail(req, res) {
-    let usuarioEmail = req.params.email;
+/*function getEmail(req, res) {
+    let usuarioEmail = req;
    // console.log('params = ' + usuarioEmail);
     Usuario.getEmail(usuarioEmail, (err, email) => {
         let emailEncontrado = email[0];
@@ -31,6 +31,21 @@ function getEmail(req, res) {
         }
         //console.log(email)
     });
+}*/
+
+//Metodo que busca un usuario por Email
+const getEmail = (usuarioEmail) => {
+    let promise = new Promise((resolve, reject) => {
+        Usuario.getEmail(usuarioEmail, (err, email) => {
+            let emailEncontrado = email[0];
+                if (Object.keys(email).length == 0 || emailEncontrado.email != usuarioEmail) {
+                    resolve(400);
+                } else {
+                    reject(200);
+                }
+        });
+    });
+    return promise;
 }
 
 //Metodo que guarda un oficio
@@ -48,14 +63,15 @@ function saveUsuario(req, res) {
         calle: params.calle,
         colonia: params.colonia
     });
-
-    Usuario.saveUsuario(usuario, (err, newUsuarioSaved) => {
+    getEmail(params.email)
+    .then(Usuario.saveUsuario(usuario, (err, newUsuarioSaved) => {
         if (err) {
-            res.status(500).send({ message: 'Error al guardar el Oficio' });
+            res.status(500).send({ message: 'Error al guardar el Usuario' });
         } else {
             res.status(200).send({ message: 'Usuario guardado correctamante', newUsuarioSaved });
         }
-    });
+    }))
+    .catch( error => console.error('Ya existe un usuario con ese correo: '+error));
 }
 
 //Metodo que actualiza un oficio por ID
